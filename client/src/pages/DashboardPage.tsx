@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Shield, Settings, Users, AlertTriangle, MapPin, Clock, Video, Upload, Smartphone, Globe, Eye, Radio } from 'lucide-react';
+import { Shield, Settings, Users, AlertTriangle, MapPin, Clock, Video, Upload, Smartphone, Globe, Eye, Radio, VolumeX, Navigation } from 'lucide-react';
 
 export function DashboardPage() {
   const navigate = useNavigate();
@@ -12,6 +12,7 @@ export function DashboardPage() {
     {
       id: 1,
       location: 'Downtown, NYC',
+      coordinates: '40.7128° N, 74.0060° W',
       time: '2 mins ago',
       status: 'active',
       distance: '0.5 miles',
@@ -21,6 +22,7 @@ export function DashboardPage() {
     {
       id: 2,
       location: 'Central Park',
+      coordinates: '40.7812° N, 73.9665° W',
       time: '15 mins ago',
       status: 'resolved',
       distance: '1.2 miles',
@@ -34,7 +36,8 @@ export function DashboardPage() {
   };
 
   const handleWatchLive = (alertId) => {
-    alert('🔴 LIVE STREAM\n\nConnecting you to live video feed...\n\n🌍 You are one of thousands watching worldwide!\n\nHelp mobilize local authorities and provide real-time support.');
+    const alert = activeAlerts.find(a => a.id === alertId);
+    alert('🔴 LIVE STREAM\n\nConnecting you to live video feed...\n\n🌍 You are one of thousands watching worldwide!\n📍 Victim Location: ' + alert.coordinates + '\n\n🔇 Victim\'s phone is SILENT - no sounds to expose them\n📱 Screen appears BLACK to attackers\n\nHelp mobilize local authorities and provide real-time support.');
   };
 
   return (
@@ -56,18 +59,22 @@ export function DashboardPage() {
 
       <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
         <h2 className="font-bold text-green-800 mb-2">🔴 GLOBAL LIVE PROTECTION ACTIVE</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
           <div className="flex items-center">
             <Smartphone className="h-4 w-4 text-green-600 mr-2" />
             <span>BLACK screen recording ready</span>
           </div>
           <div className="flex items-center">
-            <Globe className="h-4 w-4 text-green-600 mr-2" />
-            <span>🌍 LIVE stream to ALL users worldwide</span>
+            <VolumeX className="h-4 w-4 text-green-600 mr-2" />
+            <span>🔇 Auto SILENT mode ready</span>
           </div>
           <div className="flex items-center">
-            <Eye className="h-4 w-4 text-green-600 mr-2" />
-            <span>Real-time global viewing enabled</span>
+            <Navigation className="h-4 w-4 text-green-600 mr-2" />
+            <span>📍 GPS sharing with ALL users</span>
+          </div>
+          <div className="flex items-center">
+            <Globe className="h-4 w-4 text-green-600 mr-2" />
+            <span>🌍 LIVE stream to ALL worldwide</span>
           </div>
         </div>
       </div>
@@ -77,11 +84,25 @@ export function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div className="flex items-center">
             <Radio className="h-4 w-4 text-blue-600 mr-2" />
-            <span>🔴 LIVE alerts broadcast globally</span>
+            <span>🔴 LIVE alerts + GPS locations broadcast globally</span>
           </div>
           <div className="flex items-center">
             <Users className="h-4 w-4 text-blue-600 mr-2" />
-            <span>Every member gets instant notifications</span>
+            <span>Every member gets instant notifications + victim location</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6">
+        <h2 className="font-bold text-purple-800 mb-2">🔇 AUTOMATIC STEALTH PROTECTION</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div className="flex items-center">
+            <VolumeX className="h-4 w-4 text-purple-600 mr-2" />
+            <span>📱 Phone automatically goes SILENT - no sounds to expose victim</span>
+          </div>
+          <div className="flex items-center">
+            <MapPin className="h-4 w-4 text-purple-600 mr-2" />
+            <span>📍 GPS location automatically shared with ALL users worldwide</span>
           </div>
         </div>
       </div>
@@ -97,7 +118,7 @@ export function DashboardPage() {
           icon={<AlertTriangle className="h-8 w-8 text-red-600" />}
           title="🔴 LIVE Alerts"
           value="3"
-          description="Streaming globally now"
+          description="Streaming + GPS globally now"
         />
         <StatCard
           icon={<Video className="h-8 w-8 text-green-600" />}
@@ -121,7 +142,7 @@ export function DashboardPage() {
               🔴 LIVE Global S.O.S Alerts
             </CardTitle>
             <CardDescription>
-              Real-time emergencies broadcast to all users worldwide
+              Real-time emergencies + GPS locations broadcast to all users worldwide
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -133,6 +154,7 @@ export function DashboardPage() {
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <div>
                         <p className="font-medium">{alert.location}</p>
+                        <p className="text-xs text-blue-600">📍 {alert.coordinates}</p>
                         <p className="text-sm text-gray-500">{alert.distance} away</p>
                       </div>
                     </div>
@@ -160,9 +182,10 @@ export function DashboardPage() {
                     )}
                   </div>
                   
-                  <p className="text-xs text-gray-600 mt-2">
-                    📤 Video auto-uploaded • 🌍 Global community responding • 📍 GPS location shared
-                  </p>
+                  <div className="mt-2 text-xs text-gray-600 space-y-1">
+                    <p>📤 Video auto-uploaded • 🌍 Global community responding</p>
+                    <p>📍 GPS location shared with ALL users • 🔇 Victim's phone SILENT</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -198,15 +221,19 @@ export function DashboardPage() {
                   </div>
                   <div className="flex items-center">
                     <span className="text-green-600 mr-2">✅</span>
+                    <span>🔇 Auto SILENT mode (no sounds to expose you)</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✅</span>
+                    <span>📍 GPS location sharing with ALL users</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✅</span>
                     <span>🔴 LIVE stream to ALL users worldwide</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-green-600 mr-2">✅</span>
                     <span>🌍 Global community instant alerts</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-green-600 mr-2">✅</span>
-                    <span>Real-time worldwide viewing access</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-green-600 mr-2">✅</span>
@@ -248,6 +275,20 @@ export function DashboardPage() {
                   </div>
                 </div>
                 <div className="flex items-start">
+                  <span className="text-red-600 mr-2 mt-1">🔇</span>
+                  <div>
+                    <strong>Phone Automatically Goes SILENT</strong>
+                    <p className="text-xs text-gray-600">No ringtones or sounds to expose you - vibrate only</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <span className="text-red-600 mr-2 mt-1">📍</span>
+                  <div>
+                    <strong>GPS Location Shared with ALL Users</strong>
+                    <p className="text-xs text-gray-600">🌍 Everyone worldwide can see your exact location</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
                   <span className="text-red-600 mr-2 mt-1">🔴</span>
                   <div>
                     <strong>LIVE Stream to ENTIRE WORLD</strong>
@@ -255,17 +296,10 @@ export function DashboardPage() {
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <span className="text-red-600 mr-2 mt-1">👥</span>
-                  <div>
-                    <strong>Global Community Watches LIVE</strong>
-                    <p className="text-xs text-gray-600">Thousands of people worldwide viewing your situation in real-time</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
                   <span className="text-red-600 mr-2 mt-1">☁️</span>
                   <div>
                     <strong>Auto-Upload + Global Access</strong>
-                    <p className="text-xs text-gray-600">Video saved to cloud, accessible worldwide for 96 hours</p>
+                    <p className="text-xs text-gray-600">Video + location saved to cloud, accessible worldwide for 96 hours</p>
                   </div>
                 </div>
               </div>
@@ -277,9 +311,10 @@ export function DashboardPage() {
                 <div className="space-y-1 text-sm text-blue-700">
                   <p>• 🌍 ALL users worldwide get instant alert</p>
                   <p>• 👁️ Everyone can watch your LIVE stream</p>
+                  <p>• 📍 Everyone can see your EXACT location</p>
                   <p>• 📞 Community calls local authorities</p>
-                  <p>• 📍 Your GPS location shared globally</p>
                   <p>• 🚨 Thousands mobilize to help you</p>
+                  <p>• 🔇 Your phone stays SILENT for safety</p>
                   <p>• 📹 LIVE evidence preserved forever</p>
                 </div>
               </div>
