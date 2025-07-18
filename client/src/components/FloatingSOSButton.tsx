@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { AlertTriangle } from 'lucide-react';
 
 export function FloatingSOSButton() {
   const [tapCount, setTapCount] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     // Reset tap count after 3 seconds
@@ -97,34 +97,49 @@ export function FloatingSOSButton() {
     }
   };
 
+  const handleMouseEnter = () => {
+    setShowTooltip(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
+
+  const getTooltipText = () => {
+    if (isRecording) {
+      return 'Recording Active - Triple tap to stop';
+    } else if (tapCount > 0) {
+      return `${tapCount}/3 taps to activate S.O.S`;
+    } else {
+      return 'Triple tap to activate S.O.S';
+    }
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            onClick={isRecording ? handleStopRecording : handleTap}
-            className={`h-16 w-16 rounded-full shadow-lg transition-all duration-200 ${
-              isRecording 
-                ? 'bg-red-700 hover:bg-red-800 animate-pulse' 
-                : tapCount > 0 
-                  ? 'bg-red-600 hover:bg-red-700 scale-110' 
-                  : 'bg-red-600 hover:bg-red-700'
-            }`}
-          >
-            <AlertTriangle className="h-8 w-8 text-white" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent side="left">
-          <p>
-            {isRecording 
-              ? 'Recording Active - Triple tap to stop' 
+      <div className="relative">
+        <Button
+          onClick={isRecording ? handleStopRecording : handleTap}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={`h-16 w-16 rounded-full shadow-lg transition-all duration-200 ${
+            isRecording 
+              ? 'bg-red-700 hover:bg-red-800 animate-pulse' 
               : tapCount > 0 
-                ? `${tapCount}/3 taps to activate S.O.S` 
-                : 'Triple tap to activate S.O.S'
-            }
-          </p>
-        </TooltipContent>
-      </Tooltip>
+                ? 'bg-red-600 hover:bg-red-700 scale-110' 
+                : 'bg-red-600 hover:bg-red-700'
+          }`}
+        >
+          <AlertTriangle className="h-8 w-8 text-white" />
+        </Button>
+        
+        {showTooltip && (
+          <div className="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white text-sm px-3 py-2 rounded-md whitespace-nowrap">
+            {getTooltipText()}
+            <div className="absolute left-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-4 border-l-gray-900 border-y-4 border-y-transparent"></div>
+          </div>
+        )}
+      </div>
       
       {isListening && (
         <div className="absolute -top-2 -right-2 h-4 w-4 bg-green-500 rounded-full animate-pulse"></div>
