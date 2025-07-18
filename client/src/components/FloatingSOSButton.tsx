@@ -72,12 +72,15 @@ export function FloatingSOSButton() {
   const activateEmergency = () => {
     console.log('🚨 S.O.S ACTIVATED! 🚨');
     console.log('📱 Phone screen going BLACK for stealth recording...');
+    console.log('🔴 Starting LIVE STREAM to ALL users worldwide...');
+    console.log('🌍 Broadcasting to 2,847+ users globally...');
     console.log('📹 Starting automatic video recording...');
     console.log('📍 GPS location tracking activated...');
     console.log('🔇 Phone switched to VIBRATE mode...');
     console.log('📤 Automatically uploading to S.O.S servers...');
     console.log('🚨 Emergency contacts receiving ALARM notifications...');
-    console.log('🌍 Community members being alerted worldwide...');
+    console.log('🌍 ENTIRE WORLD being alerted and watching LIVE...');
+    console.log('👥 Global community mobilizing for help...');
     
     setIsRecording(true);
     setTapCount(0);
@@ -110,10 +113,12 @@ export function FloatingSOSButton() {
         <div style="font-size: 14px;">Screen appears BLACK to others</div>
         <div style="font-size: 14px; margin-top: 10px;">Triple tap anywhere to stop</div>
         <div style="font-size: 12px; margin-top: 20px; opacity: 0.5;">
-          ✅ Video automatically uploading<br/>
-          ✅ GPS location shared<br/>
-          ✅ Emergency contacts alerted<br/>
-          ✅ Community members notified
+          🔴 LIVE streaming to ALL users worldwide<br/>
+          🌍 2,847+ people watching globally<br/>
+          📹 Video automatically uploading<br/>
+          📍 GPS location shared globally<br/>
+          🚨 Emergency contacts alerted<br/>
+          👥 Global community mobilizing
         </div>
       </div>
     `;
@@ -125,14 +130,16 @@ export function FloatingSOSButton() {
     // In real app, this would:
     // 1. Turn entire screen black (not just overlay)
     // 2. Start background video recording
-    // 3. Enable GPS tracking
-    // 4. Switch phone to vibrate/silent mode
-    // 5. Send notifications to emergency contacts with ALARM sound
-    // 6. Alert community members worldwide
-    // 7. Automatically upload video stream to S.O.S servers
-    // 8. Start 96-hour countdown for video storage
+    // 3. Start LIVE STREAM to ALL users worldwide
+    // 4. Enable GPS tracking
+    // 5. Switch phone to vibrate/silent mode
+    // 6. Send notifications to emergency contacts with ALARM sound
+    // 7. Alert ALL community members worldwide with LIVE stream access
+    // 8. Automatically upload video stream to S.O.S servers
+    // 9. Make recording accessible to ALL users for 96 hours
+    // 10. Enable global community to watch LIVE and help coordinate response
     
-    alert('🚨 S.O.S ACTIVATED!\n\n📱 Your screen is now BLACK for stealth\n📹 Recording automatically started\n📤 Video uploading to secure servers\n🔔 Emergency contacts & community alerted\n\nVictim does NOTHING - everything is automatic!');
+    alert('🚨 S.O.S ACTIVATED!\n\n🔴 LIVE STREAMING TO ENTIRE WORLD!\n\n📱 Your screen is now BLACK for stealth\n📹 Recording automatically started\n🌍 2,847+ users worldwide watching LIVE\n📤 Video streaming to secure servers\n👥 Global community mobilizing to help\n🔔 Emergency contacts & world alerted\n\n🌍 THE ENTIRE WORLD IS NOW WATCHING AND HELPING!\n\nVictim does NOTHING - everything is automatic!');
   };
 
   let blackScreenTapCount = 0;
@@ -157,7 +164,9 @@ export function FloatingSOSButton() {
 
   const stopRecording = () => {
     console.log('⏹️ S.O.S Recording STOPPED');
+    console.log('🔴 LIVE stream to global community ended');
     console.log('💾 Video saved for 96 hours on secure servers');
+    console.log('🌍 Global community still has access to recording');
     console.log('📱 Phone returning to normal mode');
     
     setIsRecording(false);
@@ -169,7 +178,7 @@ export function FloatingSOSButton() {
       overlay.remove();
     }
     
-    alert('⏹️ S.O.S Recording STOPPED\n\n💾 Video automatically saved for 96 hours\n🔒 Stored on secure S.O.S servers\n👥 Community can view in dashboard\n\nYou did NOTHING - all automatic!');
+    alert('⏹️ S.O.S Recording STOPPED\n\n🔴 LIVE stream ended\n💾 Video automatically saved for 96 hours\n🔒 Stored on secure S.O.S servers\n🌍 ALL users worldwide can still view recording\n👥 Global community continues monitoring\n\nYou did NOTHING - all automatic!\n\nThe world was watching and helping!');
   };
 
   const handleMouseEnter = () => {
@@ -184,11 +193,11 @@ export function FloatingSOSButton() {
 
   const getTooltipText = () => {
     if (isRecording) {
-      return 'RECORDING ACTIVE - Screen is BLACK - Triple tap to stop';
+      return '🔴 LIVE TO WORLD - Screen is BLACK - Triple tap to stop';
     } else if (tapCount > 0) {
       return `${tapCount}/3 taps to activate S.O.S`;
     } else {
-      return 'Triple tap to activate S.O.S (screen goes BLACK, auto-records & uploads)';
+      return 'Triple tap to activate S.O.S (🔴 LIVE to entire world, screen goes BLACK)';
     }
   };
 
@@ -228,7 +237,7 @@ export function FloatingSOSButton() {
       )}
       
       {isRecording && (
-        <div className="absolute -top-1 -left-1 h-3 w-3 bg-red-500 rounded-full animate-ping" title="Recording active"></div>
+        <div className="absolute -top-1 -left-1 h-3 w-3 bg-red-500 rounded-full animate-ping" title="🔴 LIVE to entire world"></div>
       )}
     </div>
   );
