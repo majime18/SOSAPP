@@ -8,6 +8,7 @@ export function FloatingSOSButton() {
   const [isRecording, setIsRecording] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isBlackScreen, setIsBlackScreen] = useState(false);
 
   useEffect(() => {
     // Reset tap count after 3 seconds
@@ -69,36 +70,112 @@ export function FloatingSOSButton() {
   };
 
   const activateEmergency = () => {
-    console.log('S.O.S ACTIVATED!');
+    console.log('🚨 S.O.S ACTIVATED! 🚨');
+    console.log('📱 Phone screen going BLACK for stealth recording...');
+    console.log('📹 Starting automatic video recording...');
+    console.log('📍 GPS location tracking activated...');
+    console.log('🔇 Phone switched to VIBRATE mode...');
+    console.log('📤 Automatically uploading to S.O.S servers...');
+    console.log('🚨 Emergency contacts receiving ALARM notifications...');
+    console.log('🌍 Community members being alerted worldwide...');
+    
     setIsRecording(true);
     setTapCount(0);
     
-    // Simulate emergency activation
-    // In a real app, this would:
-    // 1. Start video recording with black screen
-    // 2. Enable GPS tracking
-    // 3. Send notifications to emergency contacts
-    // 4. Alert community members
-    // 5. Switch phone to vibrate mode
+    // Simulate black screen activation
+    setIsBlackScreen(true);
     
-    // For demo, show alert
-    alert('S.O.S ACTIVATED! Emergency services and contacts have been notified.');
+    // Show black screen overlay for demonstration (in real app, entire screen would go black)
+    const blackScreenOverlay = document.createElement('div');
+    blackScreenOverlay.id = 'sos-black-screen';
+    blackScreenOverlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ff0000;
+      font-size: 20px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    `;
+    blackScreenOverlay.innerHTML = `
+      <div style="opacity: 0.3;">
+        <div style="margin-bottom: 20px;">🔴 S.O.S RECORDING ACTIVE</div>
+        <div style="font-size: 14px;">Screen appears BLACK to others</div>
+        <div style="font-size: 14px; margin-top: 10px;">Triple tap anywhere to stop</div>
+        <div style="font-size: 12px; margin-top: 20px; opacity: 0.5;">
+          ✅ Video automatically uploading<br/>
+          ✅ GPS location shared<br/>
+          ✅ Emergency contacts alerted<br/>
+          ✅ Community members notified
+        </div>
+      </div>
+    `;
     
-    // Auto-stop after demo (in real app, user would triple-tap again to stop)
+    // Add click handler to stop recording
+    blackScreenOverlay.addEventListener('click', handleBlackScreenTap);
+    document.body.appendChild(blackScreenOverlay);
+    
+    // In real app, this would:
+    // 1. Turn entire screen black (not just overlay)
+    // 2. Start background video recording
+    // 3. Enable GPS tracking
+    // 4. Switch phone to vibrate/silent mode
+    // 5. Send notifications to emergency contacts with ALARM sound
+    // 6. Alert community members worldwide
+    // 7. Automatically upload video stream to S.O.S servers
+    // 8. Start 96-hour countdown for video storage
+    
+    alert('🚨 S.O.S ACTIVATED!\n\n📱 Your screen is now BLACK for stealth\n📹 Recording automatically started\n📤 Video uploading to secure servers\n🔔 Emergency contacts & community alerted\n\nVictim does NOTHING - everything is automatic!');
+  };
+
+  let blackScreenTapCount = 0;
+  const handleBlackScreenTap = () => {
+    blackScreenTapCount++;
+    if (blackScreenTapCount >= 3) {
+      stopRecording();
+      blackScreenTapCount = 0;
+    }
+    
+    // Reset tap count after 3 seconds
     setTimeout(() => {
-      setIsRecording(false);
-    }, 5000);
+      blackScreenTapCount = 0;
+    }, 3000);
   };
 
   const handleStopRecording = () => {
     if (isRecording) {
-      setIsRecording(false);
-      alert('S.O.S Recording stopped. Video saved for 96 hours.');
+      stopRecording();
     }
   };
 
+  const stopRecording = () => {
+    console.log('⏹️ S.O.S Recording STOPPED');
+    console.log('💾 Video saved for 96 hours on secure servers');
+    console.log('📱 Phone returning to normal mode');
+    
+    setIsRecording(false);
+    setIsBlackScreen(false);
+    
+    // Remove black screen overlay
+    const overlay = document.getElementById('sos-black-screen');
+    if (overlay) {
+      overlay.remove();
+    }
+    
+    alert('⏹️ S.O.S Recording STOPPED\n\n💾 Video automatically saved for 96 hours\n🔒 Stored on secure S.O.S servers\n👥 Community can view in dashboard\n\nYou did NOTHING - all automatic!');
+  };
+
   const handleMouseEnter = () => {
-    setShowTooltip(true);
+    if (!isBlackScreen) {
+      setShowTooltip(true);
+    }
   };
 
   const handleMouseLeave = () => {
@@ -107,13 +184,18 @@ export function FloatingSOSButton() {
 
   const getTooltipText = () => {
     if (isRecording) {
-      return 'Recording Active - Triple tap to stop';
+      return 'RECORDING ACTIVE - Screen is BLACK - Triple tap to stop';
     } else if (tapCount > 0) {
       return `${tapCount}/3 taps to activate S.O.S`;
     } else {
-      return 'Triple tap to activate S.O.S';
+      return 'Triple tap to activate S.O.S (screen goes BLACK, auto-records & uploads)';
     }
   };
+
+  // Don't show button during black screen mode (victim shouldn't see anything)
+  if (isBlackScreen) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -134,7 +216,7 @@ export function FloatingSOSButton() {
         </Button>
         
         {showTooltip && (
-          <div className="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white text-sm px-3 py-2 rounded-md whitespace-nowrap">
+          <div className="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md whitespace-nowrap max-w-xs">
             {getTooltipText()}
             <div className="absolute left-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-4 border-l-gray-900 border-y-4 border-y-transparent"></div>
           </div>
@@ -142,7 +224,11 @@ export function FloatingSOSButton() {
       </div>
       
       {isListening && (
-        <div className="absolute -top-2 -right-2 h-4 w-4 bg-green-500 rounded-full animate-pulse"></div>
+        <div className="absolute -top-2 -right-2 h-4 w-4 bg-green-500 rounded-full animate-pulse" title="Voice activation listening"></div>
+      )}
+      
+      {isRecording && (
+        <div className="absolute -top-1 -left-1 h-3 w-3 bg-red-500 rounded-full animate-ping" title="Recording active"></div>
       )}
     </div>
   );
