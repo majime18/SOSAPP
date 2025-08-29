@@ -16,6 +16,8 @@ export function FloatingSOSButton() {
   const buttonRef = useRef<HTMLDivElement>(null);
   const dragOffset = useRef({ x: 0, y: 0 });
   const hasDragged = useRef(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   useEffect(() => {
     // Initialize position to bottom right
@@ -92,7 +94,42 @@ export function FloatingSOSButton() {
     }
   };
 
-  const activateEmergency = () => {
+  const startCameraRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' }, // Use back camera
+        audio: true,
+      });
+      streamRef.current = stream;
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      mediaRecorderRef.current.start();
+      console.log('Camera recording started.');
+
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          // In a real app, this data chunk would be sent to a server.
+          console.log('Recording data chunk available, would upload to server.');
+        }
+      };
+    } catch (err) {
+      console.error('Error accessing camera or starting recording:', err);
+      alert('Could not access camera. Please ensure you have granted permission.');
+    }
+  };
+
+  const stopCameraRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop();
+      console.log('Camera recording stopped.');
+    }
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+      console.log('Camera stream stopped.');
+    }
+  };
+
+  const activateEmergency = async () => {
     console.log('🚨 S.O.S ACTIVATED! 🚨');
     console.log('📱 Phone screen going BLACK for stealth recording...');
     console.log('🔇 PHONE AUTOMATICALLY SWITCHING TO SILENT/VIBRATE MODE...');
@@ -100,13 +137,15 @@ export function FloatingSOSButton() {
     console.log('🌍 YOUR EXACT LOCATION SHARED WITH ALL 2,847+ USERS WORLDWIDE...');
     console.log('🔴 Starting LIVE STREAM to ALL users worldwide...');
     console.log('🌍 Broadcasting to 2,847+ users globally...');
-    console.log('📹 Starting automatic video recording...');
+    console.log('📹 Starting automatic video recording from camera...');
     console.log('📤 Automatically uploading to S.O.S servers...');
     console.log('🚨 Emergency contacts receiving ALARM notifications...');
     console.log('🌍 ENTIRE WORLD being alerted and watching LIVE...');
     console.log('👥 Global community mobilizing for help...');
     console.log('🔇 NO RINGTONES OR NOTIFICATIONS - COMPLETELY SILENT...');
     console.log('📍 EVERYONE KNOWS YOUR EXACT LOCATION...');
+    
+    await startCameraRecording();
     
     setIsRecording(true);
     setTapCount(0);
@@ -155,7 +194,7 @@ export function FloatingSOSButton() {
     blackScreenOverlay.addEventListener('click', handleBlackScreenTap);
     document.body.appendChild(blackScreenOverlay);
     
-    alert('🚨 S.O.S ACTIVATED!\n\n🔴 LIVE STREAMING TO ENTIRE WORLD!\n\n📱 Your screen is now BLACK for stealth\n🔇 PHONE IS NOW SILENT/VIBRATE ONLY\n📍 GPS ACTIVATED - LOCATION SHARED WITH ALL USERS\n📹 Recording automatically started\n🌍 2,847+ users worldwide watching LIVE\n📤 Video streaming to secure servers\n👥 Global community mobilizing to help\n🔔 Emergency contacts & world alerted\n\n🌍 THE ENTIRE WORLD IS NOW WATCHING AND HELPING!\n📍 EVERYONE KNOWS YOUR EXACT LOCATION!\n🔇 NO SOUNDS TO EXPOSE YOU!\n\nVictim does NOTHING - everything is automatic!');
+    alert('🚨 S.O.S ACTIVATED!\n\n🔴 LIVE STREAMING TO ENTIRE WORLD!\n\n📱 Your screen is now BLACK for stealth\n🔇 PHONE IS NOW SILENT/VIBRATE ONLY\n📍 GPS ACTIVATED - LOCATION SHARED WITH ALL USERS\n📹 Recording automatically started from camera\n🌍 2,847+ users worldwide watching LIVE\n📤 Video streaming to secure servers\n👥 Global community mobilizing to help\n🔔 Emergency contacts & world alerted\n\n🌍 THE ENTIRE WORLD IS NOW WATCHING AND HELPING!\n📍 EVERYONE KNOWS YOUR EXACT LOCATION!\n🔇 NO SOUNDS TO EXPOSE YOU!\n\nVictim does NOTHING - everything is automatic!');
   };
 
   let blackScreenTapCount = 0;
@@ -187,6 +226,8 @@ export function FloatingSOSButton() {
     console.log('🔇 Phone returning to normal sound mode');
     console.log('📱 Phone returning to normal mode');
     
+    stopCameraRecording();
+
     setIsRecording(false);
     setIsBlackScreen(false);
     

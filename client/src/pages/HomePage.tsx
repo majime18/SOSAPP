@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -184,6 +185,10 @@ export function HomePage() {
         <p className="mt-4 font-bold text-green-800">
           🔴 LIVE: Your emergency + location = World's priority. Everyone watching, everyone knows where you are, everyone helping!
         </p>
+      </div>
+
+      <div className="mt-12 text-center text-sm text-gray-500">
+        <p>Note on Compatibility: This is a web-based application designed to work on modern browsers across devices (iOS, Android, Desktop). Core features like camera access and voice recognition depend on browser support and user permissions. Distribution on specific app stores like the Apple App Store, Google Play Store, or others requires packaging this web app into a native shell, which is a separate development process.</p>
       </div>
     </div>
   );
