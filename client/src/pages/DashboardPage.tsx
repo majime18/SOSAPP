@@ -37,8 +37,8 @@ export function DashboardPage() {
   };
 
   const handleWatchLive = (alertId) => {
-    const alert = activeAlerts.find(a => a.id === alertId);
-    alert('🔴 LIVE STREAM\n\nConnecting you to live video feed...\n\n🌍 You are one of thousands watching worldwide!\n📍 Victim Location: ' + alert.coordinates + '\n🚔 Local Police have been notified and have access to this feed.\n\n🔇 Victim\'s phone is SILENT - no sounds to expose them\n📱 Screen appears BLACK to attackers\n\nHelp mobilize local authorities and provide real-time support.');
+    const alertInfo = activeAlerts.find(a => a.id === alertId);
+    alert('🔴 LIVE STREAM\n\nConnecting you to live video feed...\n\nIMPORTANT: This is a community alert, NOT a 911 call. If you believe this is a real emergency, please contact 911.\n\n🌍 You are one of thousands watching worldwide!\n📍 Victim Location: ' + alertInfo.coordinates + '\n\n🔇 Victim\'s phone is SILENT - no sounds to expose them\n📱 Screen appears BLACK to attackers\n\nHelp mobilize local authorities and provide real-time support.');
   };
 
   return (
@@ -58,9 +58,18 @@ export function DashboardPage() {
         </Button>
       </div>
 
+      <Card className="bg-yellow-50 border-yellow-400 text-yellow-800 p-4 mb-6 text-center">
+        <div className="flex items-center justify-center">
+          <AlertTriangle className="h-6 w-6 mr-2" />
+          <p className="font-bold">
+            This app is NOT a replacement for 911. In an emergency, always call 911.
+          </p>
+        </div>
+      </Card>
+
       <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
         <h2 className="font-bold text-green-800 mb-2">🔴 GLOBAL LIVE PROTECTION ACTIVE</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div className="flex items-center">
             <Smartphone className="h-4 w-4 text-green-600 mr-2" />
             <span>BLACK screen recording ready</span>
@@ -72,38 +81,6 @@ export function DashboardPage() {
           <div className="flex items-center">
             <Navigation className="h-4 w-4 text-green-600 mr-2" />
             <span>📍 GPS sharing with ALL users</span>
-          </div>
-          <div className="flex items-center">
-            <Siren className="h-4 w-4 text-green-600 mr-2" />
-            <span>🚔 Auto-notify local police</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-        <h2 className="font-bold text-blue-800 mb-2">🌍 WORLDWIDE COMMUNITY: 2,847 ACTIVE MEMBERS</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div className="flex items-center">
-            <Radio className="h-4 w-4 text-blue-600 mr-2" />
-            <span>🔴 LIVE alerts + GPS locations broadcast globally</span>
-          </div>
-          <div className="flex items-center">
-            <Users className="h-4 w-4 text-blue-600 mr-2" />
-            <span>Every member gets instant notifications + victim location</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6">
-        <h2 className="font-bold text-purple-800 mb-2">🔇 AUTOMATIC STEALTH PROTECTION</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div className="flex items-center">
-            <VolumeX className="h-4 w-4 text-purple-600 mr-2" />
-            <span>📱 Phone automatically goes SILENT - no sounds to expose victim</span>
-          </div>
-          <div className="flex items-center">
-            <MapPin className="h-4 w-4 text-purple-600 mr-2" />
-            <span>📍 GPS location automatically shared with ALL users worldwide</span>
           </div>
         </div>
       </div>
@@ -186,7 +163,6 @@ export function DashboardPage() {
                   <div className="mt-2 text-xs text-gray-600 space-y-1">
                     <p>📤 Video auto-uploaded • 🌍 Global community responding</p>
                     <p>📍 GPS location shared with ALL users • 🔇 Victim's phone SILENT</p>
-                    <p className="font-bold text-blue-700">🚔 Local Police Notified</p>
                   </div>
                 </div>
               ))}
@@ -235,10 +211,6 @@ export function DashboardPage() {
                   </div>
                   <div className="flex items-center">
                     <span className="text-green-600 mr-2">✅</span>
-                    <span>🚔 Automatic Police Notification</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-green-600 mr-2">✅</span>
                     <span>🌍 Global community instant alerts</span>
                   </div>
                   <div className="flex items-center">
@@ -263,75 +235,6 @@ export function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle>🌍 GLOBAL LIVE S.O.S PROTECTION</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <h4 className="font-medium text-red-700">🔴 LIVE Global Response When You Activate:</h4>
-              <div className="space-y-2 text-sm text-gray-700">
-                <div className="flex items-start">
-                  <span className="text-red-600 mr-2 mt-1">📱</span>
-                  <div>
-                    <strong>Screen Goes BLACK Instantly</strong>
-                    <p className="text-xs text-gray-600">Appears off to attackers - completely stealth</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-red-600 mr-2 mt-1">🔇</span>
-                  <div>
-                    <strong>Phone Automatically Goes SILENT</strong>
-                    <p className="text-xs text-gray-600">No ringtones or sounds to expose you - vibrate only</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-red-600 mr-2 mt-1">📍</span>
-                  <div>
-                    <strong>GPS Location Shared with ALL Users</strong>
-                    <p className="text-xs text-gray-600">🌍 Everyone worldwide can see your exact location</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-red-600 mr-2 mt-1">🔴</span>
-                  <div>
-                    <strong>LIVE Stream to ENTIRE WORLD</strong>
-                    <p className="text-xs text-gray-600">🌍 ALL 2,847+ users worldwide get instant LIVE access</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-red-600 mr-2 mt-1">🚔</span>
-                  <div>
-                    <strong>Local Police Automatically Notified</strong>
-                    <p className="text-xs text-gray-600">LIVE stream and GPS sent for immediate dispatch</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-medium text-blue-700">🌍 What the GLOBAL Community Does:</h4>
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-lg font-bold text-blue-800 mb-2">🔴 LIVE GLOBAL RESPONSE!</p>
-                <div className="space-y-1 text-sm text-blue-700">
-                  <p>• 🌍 ALL users worldwide get instant alert</p>
-                  <p>• 👁️ Everyone can watch your LIVE stream</p>
-                  <p>• 📍 Everyone can see your EXACT location</p>
-                  <p>• 📞 Community calls local authorities</p>
-                  <p>• 🚨 Thousands mobilize to help you</p>
-                  <p>• 🔇 Your phone stays SILENT for safety</p>
-                  <p>• 📹 LIVE evidence preserved forever</p>
-                </div>
-              </div>
-              <div className="bg-orange-50 p-3 rounded-lg">
-                <p className="text-sm font-bold text-orange-800">YOU DO ABSOLUTELY NOTHING!</p>
-                <p className="text-xs text-orange-700">Just activate once - the entire world takes over</p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }

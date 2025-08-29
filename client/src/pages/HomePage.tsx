@@ -36,6 +36,19 @@ export function HomePage() {
         </Button>
       </div>
 
+      <Card className="bg-yellow-50 border-yellow-400 text-yellow-800 p-6 mb-12 text-center">
+        <CardHeader>
+          <CardTitle className="flex items-center justify-center text-2xl">
+            <AlertTriangle className="h-8 w-8 mr-3" />
+            IMPORTANT SAFETY DISCLAIMER
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="font-bold text-lg">This application is NOT a replacement for 911.</p>
+          <p className="mt-2">In any emergency, you should always contact 911 or your local emergency services directly. This app is a tool to alert your community and personal contacts, but it does not connect to official emergency dispatch services.</p>
+        </CardContent>
+      </Card>
+
       <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-12">
         <h2 className="text-2xl font-bold text-red-800 mb-4 text-center">
           🚨 ZERO EFFORT PROTECTION 🚨
@@ -64,14 +77,9 @@ export function HomePage() {
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-12">
         <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">
-          🌍 WORLDWIDE EMERGENCY RESPONSE 🌍
+          🌍 WORLDWIDE COMMUNITY RESPONSE 🌍
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-          <div className="bg-white p-4 rounded-lg">
-            <Siren className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-            <h3 className="font-bold text-blue-800">AUTOMATIC POLICE NOTIFICATION</h3>
-            <p className="text-sm text-gray-700">LIVE stream + GPS sent to local police</p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
           <div className="bg-white p-4 rounded-lg">
             <Globe className="h-8 w-8 text-blue-600 mx-auto mb-2" />
             <h3 className="font-bold text-blue-800">ALL USERS WORLDWIDE</h3>
@@ -88,33 +96,7 @@ export function HomePage() {
         </p>
       </div>
 
-      <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 mb-12">
-        <h2 className="text-2xl font-bold text-purple-800 mb-4 text-center">
-          🔇 AUTOMATIC STEALTH PROTECTION 🔇
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
-          <div className="bg-white p-4 rounded-lg">
-            <VolumeX className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-            <h3 className="font-bold text-purple-800">PHONE AUTOMATICALLY SILENT</h3>
-            <p className="text-sm text-gray-700">No ringtones, notifications, or sounds to expose you</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg">
-            <MapPin className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-            <h3 className="font-bold text-purple-800">GPS SHARED WITH EVERYONE</h3>
-            <p className="text-sm text-gray-700">All users worldwide can see your exact location</p>
-          </div>
-        </div>
-        <p className="text-center mt-4 font-bold text-purple-700">
-          🔇 SILENT + 📍 TRACKED: Maximum stealth, maximum safety!
-        </p>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <FeatureCard
-          icon={<Siren className="h-8 w-8 text-red-600" />}
-          title="Automatic Police Dispatch"
-          description="🚨 Your LIVE stream and GPS location are automatically sent to the nearest police department for immediate dispatch."
-        />
         <FeatureCard
           icon={<Camera className="h-8 w-8 text-red-600" />}
           title="Dual-Camera Broadcasting"
@@ -134,6 +116,11 @@ export function HomePage() {
           icon={<VolumeX className="h-8 w-8 text-red-600" />}
           title="Auto Silent Mode"
           description="🔇 Phone automatically switches to silent/vibrate → No sounds to expose you → Complete stealth"
+        />
+        <FeatureCard
+          icon={<Navigation className="h-8 w-8 text-red-600" />}
+          title="GPS Shared with ALL"
+          description="📍 Location automatically shared with ENTIRE global community → Everyone knows where you are"
         />
         <FeatureCard
           icon={<Clock className="h-8 w-8 text-red-600" />}
@@ -159,35 +146,16 @@ export function HomePage() {
               <span className="text-2xl font-bold text-red-600">2</span>
             </div>
             <h3 className="font-semibold mb-2">🔴 LIVE to WORLD</h3>
-            <p className="text-gray-600">Screen BLACK, phone SILENT, GPS shared, 🌍 ALL users & POLICE get LIVE stream from BOTH cameras + location</p>
+            <p className="text-gray-600">Screen BLACK, phone SILENT, GPS shared, 🌍 ALL users get LIVE stream from BOTH cameras + location</p>
           </div>
           <div className="flex flex-col items-center">
             <div className="bg-red-100 rounded-full p-4 mb-4">
               <span className="text-2xl font-bold text-red-600">3</span>
             </div>
             <h3 className="font-semibold mb-2">Global Help Arrives</h3>
-            <p className="text-gray-600">🌍 Entire world & local police watching + know your location - rescue coordinated globally!</p>
+            <p className="text-gray-600">🌍 Entire world watching + knows your location - rescue coordinated globally!</p>
           </div>
         </div>
-      </div>
-
-      <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-        <h3 className="text-xl font-bold text-green-800 mb-2">
-          ✅ GLOBAL LIVE PROTECTION GUARANTEED
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <h4 className="font-semibold text-green-700">🔴 LIVE STREAM + GPS = GLOBAL WITNESSES</h4>
-            <p className="text-sm text-gray-700">🌍 Everyone worldwide watching your situation + knows your exact location</p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-green-700">🔇 SILENT MODE = ZERO DETECTION</h4>
-            <p className="text-sm text-gray-700">No ringtones or sounds to expose you - complete stealth protection</p>
-          </div>
-        </div>
-        <p className="mt-4 font-bold text-green-800">
-          🔴 LIVE: Your emergency + location = World's priority. Everyone watching, everyone knows where you are, everyone helping!
-        </p>
       </div>
 
       <div className="mt-12 text-center text-sm text-gray-500">
