@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
@@ -5,6 +6,7 @@ import { SignUpPage } from './pages/SignUpPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { FloatingSOSButton } from './components/FloatingSOSButton';
+import { MembershipPage } from './pages/MembershipPage';
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/membership" element={<MembershipPage />} />
         </Routes>
         <FloatingSOSButton />
       </div>
