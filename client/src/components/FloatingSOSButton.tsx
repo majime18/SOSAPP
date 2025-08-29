@@ -1,5 +1,6 @@
+
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle } from 'lucide-react';
 
@@ -9,6 +10,20 @@ export function FloatingSOSButton() {
   const [isListening, setIsListening] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [isBlackScreen, setIsBlackScreen] = useState(false);
+
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const dragOffset = useRef({ x: 0, y: 0 });
+  const hasDragged = useRef(false);
+
+  useEffect(() => {
+    // Initialize position to bottom right
+    setPosition({
+      x: window.innerWidth - 96, // approx button width + margin
+      y: window.innerHeight - 96,
+    });
+  }, []);
 
   useEffect(() => {
     // Reset tap count after 3 seconds
@@ -43,7 +58,11 @@ export function FloatingSOSButton() {
         setIsListening(false);
         // Restart listening
         if (!isRecording) {
-          recognition.start();
+          try {
+            recognition.start();
+          } catch (e) {
+            console.error("Speech recognition couldn't be started.", e);
+          }
         }
       };
 
@@ -52,7 +71,11 @@ export function FloatingSOSButton() {
       };
 
       // Start listening
-      recognition.start();
+      try {
+        recognition.start();
+      } catch (e) {
+        console.error("Speech recognition couldn't be started.", e);
+      }
 
       return () => {
         recognition.stop();
@@ -132,20 +155,6 @@ export function FloatingSOSButton() {
     blackScreenOverlay.addEventListener('click', handleBlackScreenTap);
     document.body.appendChild(blackScreenOverlay);
     
-    // In real app, this would:
-    // 1. Turn entire screen black (not just overlay)
-    // 2. AUTOMATICALLY SWITCH PHONE TO SILENT/VIBRATE MODE
-    // 3. AUTOMATICALLY ACTIVATE GPS AND SHARE LOCATION WITH ALL USERS
-    // 4. Start background video recording
-    // 5. Start LIVE STREAM to ALL users worldwide
-    // 6. Send notifications to emergency contacts with ALARM sound
-    // 7. Alert ALL community members worldwide with LIVE stream access
-    // 8. Show victim's EXACT GPS location to ALL users on the app
-    // 9. Automatically upload video stream to S.O.S servers
-    // 10. Make recording accessible to ALL users for 96 hours
-    // 11. Enable global community to watch LIVE and coordinate rescue
-    // 12. Ensure NO ringtones/notifications can expose the victim
-    
     alert('🚨 S.O.S ACTIVATED!\n\n🔴 LIVE STREAMING TO ENTIRE WORLD!\n\n📱 Your screen is now BLACK for stealth\n🔇 PHONE IS NOW SILENT/VIBRATE ONLY\n📍 GPS ACTIVATED - LOCATION SHARED WITH ALL USERS\n📹 Recording automatically started\n🌍 2,847+ users worldwide watching LIVE\n📤 Video streaming to secure servers\n👥 Global community mobilizing to help\n🔔 Emergency contacts & world alerted\n\n🌍 THE ENTIRE WORLD IS NOW WATCHING AND HELPING!\n📍 EVERYONE KNOWS YOUR EXACT LOCATION!\n🔇 NO SOUNDS TO EXPOSE YOU!\n\nVictim does NOTHING - everything is automatic!');
   };
 
@@ -210,19 +219,95 @@ export function FloatingSOSButton() {
     }
   };
 
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    hasDragged.current = false;
+    setIsDragging(true);
+
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      dragOffset.current = {
+        x: clientX - rect.left,
+        y: clientY - rect.top,
+      };
+    }
+  };
+
+  const handleDragMove = (e: MouseEvent | TouchEvent) => {
+    if (!isDragging) return;
+    hasDragged.current = true;
+    e.preventDefault(); // Prevent scrolling on touch devices
+
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
+    let newX = clientX - dragOffset.current.x;
+    let newY = clientY - dragOffset.current.y;
+
+    // Constrain to viewport
+    const buttonWidth = buttonRef.current?.offsetWidth || 64;
+    const buttonHeight = buttonRef.current?.offsetHeight || 64;
+
+    newX = Math.max(0, Math.min(newX, window.innerWidth - buttonWidth));
+    newY = Math.max(0, Math.min(newY, window.innerHeight - buttonHeight));
+
+    setPosition({ x: newX, y: newY });
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleDragMove);
+      window.addEventListener('mouseup', handleDragEnd);
+      window.addEventListener('touchmove', handleDragMove, { passive: false });
+      window.addEventListener('touchend', handleDragEnd);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleDragMove);
+      window.removeEventListener('mouseup', handleDragEnd);
+      window.removeEventListener('touchmove', handleDragMove);
+      window.removeEventListener('touchend', handleDragEnd);
+    };
+  }, [isDragging]);
+
+  const handleClick = () => {
+    if (hasDragged.current) {
+      return;
+    }
+    if (isRecording) {
+      handleStopRecording();
+    } else {
+      handleTap();
+    }
+  };
+
   // Don't show button during black screen mode (victim shouldn't see anything)
   if (isBlackScreen) {
     return null;
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div
+      ref={buttonRef}
+      className="fixed z-50"
+      style={{ left: `${position.x}px`, top: `${position.y}px` }}
+      onMouseDown={handleDragStart}
+      onTouchStart={handleDragStart}
+    >
       <div className="relative">
         <Button
-          onClick={isRecording ? handleStopRecording : handleTap}
+          onClick={handleClick}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className={`h-16 w-16 rounded-full shadow-lg transition-all duration-200 ${
+          className={`h-16 w-16 rounded-full shadow-lg transition-all duration-200 cursor-grab ${
+            isDragging ? 'cursor-grabbing' : ''
+          } ${
             isRecording 
               ? 'bg-red-700 hover:bg-red-800 animate-pulse' 
               : tapCount > 0 
@@ -233,7 +318,7 @@ export function FloatingSOSButton() {
           <AlertTriangle className="h-8 w-8 text-white" />
         </Button>
         
-        {showTooltip && (
+        {showTooltip && !isDragging && (
           <div className="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white text-xs px-3 py-2 rounded-md whitespace-nowrap max-w-xs">
             {getTooltipText()}
             <div className="absolute left-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-4 border-l-gray-900 border-y-4 border-y-transparent"></div>
