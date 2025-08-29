@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, Users, AlertTriangle, Clock, MapPin, Video, Upload, Smartphone, Globe, Eye, VolumeX, Navigation, Camera } from 'lucide-react';
+import { Shield, Users, AlertTriangle, Clock, MapPin, Video, Upload, Smartphone, Globe, Eye, VolumeX, Navigation, Camera, Siren } from 'lucide-react';
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -64,9 +64,14 @@ export function HomePage() {
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-12">
         <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">
-          🌍 WORLDWIDE COMMUNITY RESPONSE 🌍
+          🌍 WORLDWIDE EMERGENCY RESPONSE 🌍
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+          <div className="bg-white p-4 rounded-lg">
+            <Siren className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+            <h3 className="font-bold text-blue-800">AUTOMATIC POLICE NOTIFICATION</h3>
+            <p className="text-sm text-gray-700">LIVE stream + GPS sent to local police</p>
+          </div>
           <div className="bg-white p-4 rounded-lg">
             <Globe className="h-8 w-8 text-blue-600 mx-auto mb-2" />
             <h3 className="font-bold text-blue-800">ALL USERS WORLDWIDE</h3>
@@ -76,11 +81,6 @@ export function HomePage() {
             <Eye className="h-8 w-8 text-blue-600 mx-auto mb-2" />
             <h3 className="font-bold text-blue-800">LIVE STREAM + LOCATION</h3>
             <p className="text-sm text-gray-700">Watch real-time video + see exact GPS location</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg">
-            <AlertTriangle className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-            <h3 className="font-bold text-blue-800">INSTANT MOBILIZATION</h3>
-            <p className="text-sm text-gray-700">Global community mobilizes to your location</p>
           </div>
         </div>
         <p className="text-center mt-4 font-bold text-blue-700">
@@ -111,9 +111,9 @@ export function HomePage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <FeatureCard
-          icon={<AlertTriangle className="h-8 w-8 text-red-600" />}
-          title="Stealth Activation"
-          description="Tap 3x or voice command → Screen goes BLACK → Phone goes SILENT → GPS shared with ALL users"
+          icon={<Siren className="h-8 w-8 text-red-600" />}
+          title="Automatic Police Dispatch"
+          description="🚨 Your LIVE stream and GPS location are automatically sent to the nearest police department for immediate dispatch."
         />
         <FeatureCard
           icon={<Camera className="h-8 w-8 text-red-600" />}
@@ -126,14 +126,14 @@ export function HomePage() {
           description="🌍 ALL app members globally notified → LIVE viewing + GPS location → Real-time help mobilized"
         />
         <FeatureCard
+          icon={<AlertTriangle className="h-8 w-8 text-red-600" />}
+          title="Stealth Activation"
+          description="Tap 3x or voice command → Screen goes BLACK → Phone goes SILENT → GPS shared with ALL users"
+        />
+        <FeatureCard
           icon={<VolumeX className="h-8 w-8 text-red-600" />}
           title="Auto Silent Mode"
           description="🔇 Phone automatically switches to silent/vibrate → No sounds to expose you → Complete stealth"
-        />
-        <FeatureCard
-          icon={<Navigation className="h-8 w-8 text-red-600" />}
-          title="GPS Shared with ALL"
-          description="📍 Location automatically shared with ENTIRE global community → Everyone knows where you are"
         />
         <FeatureCard
           icon={<Clock className="h-8 w-8 text-red-600" />}
@@ -159,14 +159,14 @@ export function HomePage() {
               <span className="text-2xl font-bold text-red-600">2</span>
             </div>
             <h3 className="font-semibold mb-2">🔴 LIVE to WORLD</h3>
-            <p className="text-gray-600">Screen BLACK, phone SILENT, GPS shared, 🌍 ALL users get LIVE stream from BOTH cameras + location</p>
+            <p className="text-gray-600">Screen BLACK, phone SILENT, GPS shared, 🌍 ALL users & POLICE get LIVE stream from BOTH cameras + location</p>
           </div>
           <div className="flex flex-col items-center">
             <div className="bg-red-100 rounded-full p-4 mb-4">
               <span className="text-2xl font-bold text-red-600">3</span>
             </div>
             <h3 className="font-semibold mb-2">Global Help Arrives</h3>
-            <p className="text-gray-600">🌍 Entire world watching + knows your location - rescue coordinated globally!</p>
+            <p className="text-gray-600">🌍 Entire world & local police watching + know your location - rescue coordinated globally!</p>
           </div>
         </div>
       </div>

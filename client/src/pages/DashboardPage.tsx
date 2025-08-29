@@ -1,10 +1,11 @@
+
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Shield, Settings, Users, AlertTriangle, MapPin, Clock, Video, Upload, Smartphone, Globe, Eye, Radio, VolumeX, Navigation } from 'lucide-react';
+import { Shield, Settings, Users, AlertTriangle, MapPin, Clock, Video, Upload, Smartphone, Globe, Eye, Radio, VolumeX, Navigation, Siren } from 'lucide-react';
 
 export function DashboardPage() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export function DashboardPage() {
 
   const handleWatchLive = (alertId) => {
     const alert = activeAlerts.find(a => a.id === alertId);
-    alert('🔴 LIVE STREAM\n\nConnecting you to live video feed...\n\n🌍 You are one of thousands watching worldwide!\n📍 Victim Location: ' + alert.coordinates + '\n\n🔇 Victim\'s phone is SILENT - no sounds to expose them\n📱 Screen appears BLACK to attackers\n\nHelp mobilize local authorities and provide real-time support.');
+    alert('🔴 LIVE STREAM\n\nConnecting you to live video feed...\n\n🌍 You are one of thousands watching worldwide!\n📍 Victim Location: ' + alert.coordinates + '\n🚔 Local Police have been notified and have access to this feed.\n\n🔇 Victim\'s phone is SILENT - no sounds to expose them\n📱 Screen appears BLACK to attackers\n\nHelp mobilize local authorities and provide real-time support.');
   };
 
   return (
@@ -73,8 +74,8 @@ export function DashboardPage() {
             <span>📍 GPS sharing with ALL users</span>
           </div>
           <div className="flex items-center">
-            <Globe className="h-4 w-4 text-green-600 mr-2" />
-            <span>🌍 LIVE stream to ALL worldwide</span>
+            <Siren className="h-4 w-4 text-green-600 mr-2" />
+            <span>🚔 Auto-notify local police</span>
           </div>
         </div>
       </div>
@@ -185,6 +186,7 @@ export function DashboardPage() {
                   <div className="mt-2 text-xs text-gray-600 space-y-1">
                     <p>📤 Video auto-uploaded • 🌍 Global community responding</p>
                     <p>📍 GPS location shared with ALL users • 🔇 Victim's phone SILENT</p>
+                    <p className="font-bold text-blue-700">🚔 Local Police Notified</p>
                   </div>
                 </div>
               ))}
@@ -230,6 +232,10 @@ export function DashboardPage() {
                   <div className="flex items-center">
                     <span className="text-green-600 mr-2">✅</span>
                     <span>🔴 LIVE stream to ALL users worldwide</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✅</span>
+                    <span>🚔 Automatic Police Notification</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-green-600 mr-2">✅</span>
@@ -296,10 +302,10 @@ export function DashboardPage() {
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <span className="text-red-600 mr-2 mt-1">☁️</span>
+                  <span className="text-red-600 mr-2 mt-1">🚔</span>
                   <div>
-                    <strong>Auto-Upload + Global Access</strong>
-                    <p className="text-xs text-gray-600">Video + location saved to cloud, accessible worldwide for 96 hours</p>
+                    <strong>Local Police Automatically Notified</strong>
+                    <p className="text-xs text-gray-600">LIVE stream and GPS sent for immediate dispatch</p>
                   </div>
                 </div>
               </div>

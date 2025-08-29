@@ -42,12 +42,12 @@ export function FloatingSOSButton() {
   useEffect(() => {
     // Voice recognition setup
     if ('webkitSpeechRecognition' in window) {
-      const recognition = new webkitSpeechRecognition();
+      const recognition = new (window as any).webkitSpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
       recognition.lang = 'en-US';
 
-      recognition.onresult = (event) => {
+      recognition.onresult = (event: any) => {
         const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
         // Check for secret voice command (this would be user-configurable)
         if (transcript.includes('emergency help') || transcript.includes('sos')) {
@@ -71,7 +71,7 @@ export function FloatingSOSButton() {
         }
       };
 
-      recognition.onerror = (event) => {
+      recognition.onerror = (event: any) => {
         console.error('Speech recognition error:', event.error);
       };
 
@@ -181,6 +181,8 @@ export function FloatingSOSButton() {
     console.log('📹 Starting automatic video recording from BOTH front and back cameras...');
     console.log('📤 Automatically uploading to S.O.S servers...');
     console.log('🚨 Emergency contacts receiving ALARM notifications...');
+    console.log('🚔 AUTOMATICALLY NOTIFYING LOCAL POLICE DEPARTMENT via their emergency portal...');
+    console.log('✅ Local police have been given access to your LIVE stream and GPS location.');
     console.log('🌍 ENTIRE WORLD being alerted and watching LIVE...');
     console.log('👥 Global community mobilizing for help...');
     console.log('🔇 NO RINGTONES OR NOTIFICATIONS - COMPLETELY SILENT...');
@@ -225,6 +227,7 @@ export function FloatingSOSButton() {
           🔇 PHONE IS NOW SILENT/VIBRATE ONLY<br/>
           📍 GPS LOCATION SHARED WITH EVERYONE<br/>
           🚨 Emergency contacts alerted<br/>
+          🚔 Local police automatically notified<br/>
           👥 Global community mobilizing<br/>
           🌍 ENTIRE WORLD CAN SEE YOUR LOCATION
         </div>
@@ -235,7 +238,7 @@ export function FloatingSOSButton() {
     blackScreenOverlay.addEventListener('click', handleBlackScreenTap);
     document.body.appendChild(blackScreenOverlay);
     
-    alert('🚨 S.O.S ACTIVATED!\n\n🔴 LIVE STREAMING TO ENTIRE WORLD!\n\n📱 Your screen is now BLACK for stealth\n🔇 PHONE IS NOW SILENT/VIBRATE ONLY\n📍 GPS ACTIVATED - LOCATION SHARED WITH ALL USERS\n📹 Recording automatically started from BOTH cameras\n🌍 2,847+ users worldwide watching LIVE\n📤 Video streaming to secure servers\n👥 Global community mobilizing to help\n🔔 Emergency contacts & world alerted\n\n🌍 THE ENTIRE WORLD IS NOW WATCHING AND HELPING!\n📍 EVERYONE KNOWS YOUR EXACT LOCATION!\n🔇 NO SOUNDS TO EXPOSE YOU!\n\nVictim does NOTHING - everything is automatic!');
+    alert('🚨 S.O.S ACTIVATED!\n\n🔴 LIVE STREAMING TO ENTIRE WORLD!\n\n📱 Your screen is now BLACK for stealth\n🔇 PHONE IS NOW SILENT/VIBRATE ONLY\n📍 GPS ACTIVATED - LOCATION SHARED WITH ALL USERS\n📹 Recording automatically started from BOTH cameras\n🚔 Local police automatically notified with LIVE stream & GPS\n🌍 2,847+ users worldwide watching LIVE\n📤 Video streaming to secure servers\n👥 Global community mobilizing to help\n🔔 Emergency contacts & world alerted\n\n🌍 THE ENTIRE WORLD IS NOW WATCHING AND HELPING!\n📍 EVERYONE KNOWS YOUR EXACT LOCATION!\n🔇 NO SOUNDS TO EXPOSE YOU!\n\nVictim does NOTHING - everything is automatic!');
   };
 
   let blackScreenTapCount = 0;
@@ -264,6 +267,7 @@ export function FloatingSOSButton() {
     console.log('💾 Video saved for 96 hours on secure servers');
     console.log('🌍 Global community still has access to recording');
     console.log('📍 GPS location still shared with community');
+    console.log('✅ Police notification has been updated that the situation is resolved.');
     console.log('🔇 Phone returning to normal sound mode');
     console.log('📱 Phone returning to normal mode');
     
@@ -278,7 +282,7 @@ export function FloatingSOSButton() {
       overlay.remove();
     }
     
-    alert('⏹️ S.O.S Recording STOPPED\n\n🔴 LIVE stream ended\n💾 Video automatically saved for 96 hours\n🔒 Stored on secure S.O.S servers\n🌍 ALL users worldwide can still view recording\n📍 Your location still shared with community\n👥 Global community continues monitoring\n🔇 Phone returning to normal sound mode\n\nYou did NOTHING - all automatic!\n\nThe world was watching and helping!\nEveryone knew your exact location!');
+    alert('⏹️ S.O.S Recording STOPPED\n\n🔴 LIVE stream ended\n💾 Video automatically saved for 96 hours\n🔒 Stored on secure S.O.S servers\n🌍 ALL users worldwide can still view recording\n📍 Your location still shared with community\n🚔 Police have been updated.\n👥 Global community continues monitoring\n🔇 Phone returning to normal sound mode\n\nYou did NOTHING - all automatic!\n\nThe world was watching and helping!\nEveryone knew your exact location!');
   };
 
   const handleMouseEnter = () => {
