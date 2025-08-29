@@ -22,8 +22,11 @@ export function HomePage() {
         <p className="text-2xl text-gray-700 mb-4">
           Your Personal Safety Guardian
         </p>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-4">
           Protecting people from unjust tyranny, false accusations, crime, kidnapping and many other expected and unexpected life events. We're committed to saving lives one S.O.S. at a time.
+        </p>
+        <p className="text-lg font-bold text-red-600 uppercase mb-8">
+          100% FREE NO ADVERTISING
         </p>
         <Button 
           onClick={handleGetStarted}
