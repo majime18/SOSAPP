@@ -77,22 +77,6 @@ export function SettingsPage() {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Membership</CardTitle>
-              <CardDescription>Manage your S.O.S membership plan.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div>
-                  <p className="font-medium">Current Plan: Free</p>
-                  <p className="text-sm text-gray-500">Community Protection</p>
-                </div>
-                <Button onClick={() => navigate('/membership')} className="bg-red-600 hover:bg-red-700">Upgrade</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
               <CardTitle>Emergency Contacts</CardTitle>
               <CardDescription>
                 Add up to 6 emergency contacts who will receive alarm notifications
