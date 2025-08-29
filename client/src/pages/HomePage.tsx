@@ -110,7 +110,7 @@ export function HomePage() {
         <FeatureCard
           icon={<AlertTriangle className="h-8 w-8 text-red-600" />}
           title="Stealth Activation"
-          description="Tap 3x or voice command → Screen goes BLACK → Phone goes SILENT → GPS shared with ALL users"
+          description="Triple tap anywhere on screen or use voice command → Screen goes BLACK → Phone goes SILENT → GPS shared with ALL users"
         />
         <FeatureCard
           icon={<VolumeX className="h-8 w-8 text-red-600" />}
@@ -139,7 +139,7 @@ export function HomePage() {
               <span className="text-2xl font-bold text-red-600">1</span>
             </div>
             <h3 className="font-semibold mb-2">Activate S.O.S</h3>
-            <p className="text-gray-600">Triple tap floating button or say your secret voice command</p>
+            <p className="text-gray-600">Triple tap anywhere on the screen or say your secret voice command</p>
           </div>
           <div className="flex flex-col items-center">
             <div className="bg-red-100 rounded-full p-4 mb-4">
