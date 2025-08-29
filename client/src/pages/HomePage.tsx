@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, Users, AlertTriangle, Clock, MapPin, Video, Upload, Smartphone, Globe, Eye, VolumeX, Navigation } from 'lucide-react';
+import { Shield, Users, AlertTriangle, Clock, MapPin, Video, Upload, Smartphone, Globe, Eye, VolumeX, Navigation, Camera } from 'lucide-react';
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -113,9 +113,9 @@ export function HomePage() {
           description="Tap 3x or voice command → Screen goes BLACK → Phone goes SILENT → GPS shared with ALL users"
         />
         <FeatureCard
-          icon={<Video className="h-8 w-8 text-red-600" />}
-          title="LIVE Global Broadcasting"
-          description="🔴 LIVE stream to ALL users worldwide → Everyone watches in real-time + sees your location"
+          icon={<Camera className="h-8 w-8 text-red-600" />}
+          title="Dual-Camera Broadcasting"
+          description="🔴 LIVE stream from BOTH front & back cameras simultaneously to ALL users worldwide"
         />
         <FeatureCard
           icon={<Users className="h-8 w-8 text-red-600" />}
@@ -156,7 +156,7 @@ export function HomePage() {
               <span className="text-2xl font-bold text-red-600">2</span>
             </div>
             <h3 className="font-semibold mb-2">🔴 LIVE to WORLD</h3>
-            <p className="text-gray-600">Screen BLACK, phone SILENT, GPS shared, 🌍 ALL users worldwide get LIVE stream + location</p>
+            <p className="text-gray-600">Screen BLACK, phone SILENT, GPS shared, 🌍 ALL users get LIVE stream from BOTH cameras + location</p>
           </div>
           <div className="flex flex-col items-center">
             <div className="bg-red-100 rounded-full p-4 mb-4">
