@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
-import { Shield, ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { Shield, ArrowLeft, Plus, Trash2, BookOpen } from 'lucide-react';
 
 export function SettingsPage() {
   const navigate = useNavigate();
@@ -213,6 +213,21 @@ export function SettingsPage() {
                   />
                 </div>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>App Distribution</CardTitle>
+              <CardDescription>
+                Learn about the process of publishing S.O.S to official app stores.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button onClick={() => navigate('/distribution-guide')} className="w-full" variant="secondary">
+                <BookOpen className="mr-2 h-4 w-4" />
+                View Publishing Guide
+              </Button>
             </CardContent>
           </Card>
 

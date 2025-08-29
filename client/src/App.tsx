@@ -5,7 +5,8 @@ import { HomePage } from './pages/HomePage';
 import { SignUpPage } from './pages/SignUpPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { SettingsPage } from './pages/SettingsPage';
-import { useSOSTrigger } from './hooks/useSOSTrigger.tsx';
+import { useSOSTrigger } from './hooks/useSOSTrigger';
+import { DistributionGuidePage } from './pages/DistributionGuidePage';
 
 function App() {
   const { handleScreenTap, BlackScreenComponent, isListening } = useSOSTrigger();
@@ -21,6 +22,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/distribution-guide" element={<DistributionGuidePage />} />
         </Routes>
         <BlackScreenComponent />
         {isListening && (
