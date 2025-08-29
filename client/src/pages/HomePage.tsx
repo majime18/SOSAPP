@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Users, AlertTriangle, Clock, MapPin, Video, Upload, Smartphone, Globe, Eye, VolumeX, Navigation, Camera, Siren } from 'lucide-react';
+import { PlatformInfo } from '@/components/PlatformInfo';
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -158,8 +159,8 @@ export function HomePage() {
         </div>
       </div>
 
-      <div className="mt-12 text-center text-sm text-gray-500">
-        <p>Note on Compatibility: This is a web-based application designed to work on modern browsers across devices (iOS, Android, Desktop). Core features like camera access and voice recognition depend on browser support and user permissions. Distribution on specific app stores like the Apple App Store, Google Play Store, or others requires packaging this web app into a native shell, which is a separate development process.</p>
+      <div className="my-12">
+        <PlatformInfo />
       </div>
     </div>
   );
