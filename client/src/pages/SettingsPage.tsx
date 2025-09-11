@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
-import { Shield, ArrowLeft, Plus, Trash2, BookOpen } from 'lucide-react';
+import { Shield, ArrowLeft, Plus, Trash2, BookOpen, FileText, Lock } from 'lucide-react';
 
 export function SettingsPage() {
   const navigate = useNavigate();
@@ -218,15 +218,23 @@ export function SettingsPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>App Distribution</CardTitle>
+              <CardTitle>Legal & App Information</CardTitle>
               <CardDescription>
-                Learn about the process of publishing S.O.S to official app stores.
+                Review legal documents and learn about app distribution.
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-2">
+              <Button onClick={() => navigate('/terms-of-use')} className="w-full" variant="secondary">
+                <FileText className="mr-2 h-4 w-4" />
+                Terms of Use
+              </Button>
+              <Button onClick={() => navigate('/privacy-policy')} className="w-full" variant="secondary">
+                <Lock className="mr-2 h-4 w-4" />
+                Privacy Policy
+              </Button>
               <Button onClick={() => navigate('/distribution-guide')} className="w-full" variant="secondary">
                 <BookOpen className="mr-2 h-4 w-4" />
-                View Publishing Guide
+                App Publishing Guide
               </Button>
             </CardContent>
           </Card>

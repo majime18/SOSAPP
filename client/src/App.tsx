@@ -7,6 +7,8 @@ import { DashboardPage } from './pages/DashboardPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { useSOSTrigger } from './hooks/useSOSTrigger';
 import { DistributionGuidePage } from './pages/DistributionGuidePage';
+import { TermsOfUsePage } from './pages/TermsOfUsePage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 
 function App() {
   const { handleScreenTap, BlackScreenComponent, isListening } = useSOSTrigger();
@@ -23,6 +25,8 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/distribution-guide" element={<DistributionGuidePage />} />
+          <Route path="/terms-of-use" element={<TermsOfUsePage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         </Routes>
         <BlackScreenComponent />
         {isListening && (

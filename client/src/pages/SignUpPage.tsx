@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -169,9 +169,16 @@ export function SignUpPage() {
               </form>
 
               <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600">
-                  By creating an account, you agree to help protect others in the S.O.S community.
-                  No ads, no distractions - just safety.
+                <p className="text-xs text-gray-600">
+                  By creating an account, you agree to our{' '}
+                  <Link to="/terms-of-use" className="underline text-blue-600">
+                    Terms of Use
+                  </Link>{' '}
+                  and acknowledge our{' '}
+                  <Link to="/privacy-policy" className="underline text-blue-600">
+                    Privacy Policy
+                  </Link>
+                  .
                 </p>
               </div>
             </CardContent>
