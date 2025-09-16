@@ -6,11 +6,13 @@ export function useSOSTrigger() {
   const [isRecording, setIsRecording] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isBlackScreen, setIsBlackScreen] = useState(false);
+  const [permissionDenied, setPermissionDenied] = useState(false);
 
   const frontStreamRef = useRef<MediaStream | null>(null);
   const backStreamRef = useRef<MediaStream | null>(null);
   const frontMediaRecorderRef = useRef<MediaRecorder | null>(null);
   const backMediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
     if (tapCount > 0) {
@@ -21,42 +23,81 @@ export function useSOSTrigger() {
     }
   }, [tapCount]);
 
-  useEffect(() => {
-    if ('webkitSpeechRecognition' in window) {
-      const recognition = new (window as any).webkitSpeechRecognition();
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.lang = 'en-US';
+  const startSpeechRecognition = useCallback(() => {
+    if (!('webkitSpeechRecognition' in window) || permissionDenied || recognitionRef.current) {
+      return;
+    }
 
-      recognition.onresult = (event: any) => {
-        const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
-        if (!isRecording && (transcript.includes('emergency help') || transcript.includes('sos'))) {
-          activateEmergency();
-        }
-      };
+    const recognition = new (window as any).webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
 
-      recognition.onstart = () => setIsListening(true);
-      recognition.onend = () => {
-        setIsListening(false);
-        if (!isRecording) {
-          try {
-            recognition.start();
-          } catch (e) {
-            console.error("Speech recognition couldn't be started.", e);
+    recognition.onresult = (event: any) => {
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          const transcript = event.results[i][0].transcript.toLowerCase().trim();
+          if (!isRecording && (transcript.includes('emergency help') || transcript.includes('sos'))) {
+            activateEmergency();
           }
         }
-      };
-      recognition.onerror = (event: any) => console.error('Speech recognition error:', event.error);
-
-      try {
-        recognition.start();
-      } catch (e) {
-        console.error("Speech recognition couldn't be started.", e);
       }
+    };
 
-      return () => recognition.stop();
+    recognition.onstart = () => {
+      setIsListening(true);
+      setPermissionDenied(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+      recognitionRef.current = null;
+      // Restart recognition only if it wasn't stopped manually and permission is granted
+      if (!isRecording && !permissionDenied) {
+        try {
+          recognition.start();
+        } catch (e) {
+          console.error("Speech recognition couldn't be restarted.", e);
+        }
+      }
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error('Speech recognition error:', event.error);
+      if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+        setPermissionDenied(true);
+        setIsListening(false);
+        recognitionRef.current = null;
+      }
+    };
+
+    try {
+      recognition.start();
+      recognitionRef.current = recognition;
+    } catch (e) {
+      console.error("Speech recognition couldn't be started.", e);
     }
-  }, [isRecording]);
+  }, [isRecording, permissionDenied, activateEmergency]);
+
+  useEffect(() => {
+    // Request microphone permission on mount to enable speech recognition
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(() => {
+        startSpeechRecognition();
+      })
+      .catch(err => {
+        console.error("Microphone permission denied:", err);
+        setPermissionDenied(true);
+      });
+
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+        recognitionRef.current = null;
+      }
+    };
+  }, [startSpeechRecognition]);
+
 
   const startDualCameraRecording = async () => {
     let recordingStarted = false;
