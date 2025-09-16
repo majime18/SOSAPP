@@ -9,6 +9,7 @@ import { useSOSTrigger } from './hooks/useSOSTrigger';
 import { DistributionGuidePage } from './pages/DistributionGuidePage';
 import { TermsOfUsePage } from './pages/TermsOfUsePage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { Footer } from './components/Footer';
 
 function App() {
   const { handleScreenTap, BlackScreenComponent, isListening } = useSOSTrigger();
@@ -16,18 +17,21 @@ function App() {
   return (
     <Router>
       <div 
-        className="min-h-screen bg-gradient-to-br from-red-50 to-white"
+        className="min-h-screen bg-gradient-to-br from-red-50 to-white flex flex-col"
         onClick={handleScreenTap}
       >
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/distribution-guide" element={<DistributionGuidePage />} />
-          <Route path="/terms-of-use" element={<TermsOfUsePage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-        </Routes>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/distribution-guide" element={<DistributionGuidePage />} />
+            <Route path="/terms-of-use" element={<TermsOfUsePage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          </Routes>
+        </main>
+        <Footer />
         <BlackScreenComponent />
         {isListening && (
           <div 
