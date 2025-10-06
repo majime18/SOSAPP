@@ -114,7 +114,7 @@ export function SignUpPage() {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    placeholder="Enter your phone number"
+                    placeholder="+1 (555) 123-4567"
                   />
                 </div>
 

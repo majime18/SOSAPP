@@ -12,9 +12,9 @@ import { Shield, ArrowLeft, Plus, Trash2, BookOpen, FileText, Lock } from 'lucid
 export function SettingsPage() {
   const navigate = useNavigate();
   const [emergencyContacts, setEmergencyContacts] = useState([
-    { id: 1, name: 'Mom', phone: '+1-555-0123' },
-    { id: 2, name: 'Dad', phone: '+1-555-0124' },
-    { id: 3, name: 'Sister', phone: '+1-555-0125' },
+    { id: 1, name: 'Mom', phone: '+1 (555) 555-0123' },
+    { id: 2, name: 'Dad', phone: '+1 (555) 555-0124' },
+    { id: 3, name: 'Sister', phone: '+1 (555) 555-0125' },
   ]);
   const [newContact, setNewContact] = useState({ name: '', phone: '' });
   const [voiceCommand, setVoiceCommand] = useState('emergency help');
@@ -117,9 +117,10 @@ export function SettingsPage() {
                         <Label htmlFor="contactPhone">Phone</Label>
                         <Input
                           id="contactPhone"
+                          type="tel"
                           value={newContact.phone}
                           onChange={(e) => setNewContact({...newContact, phone: e.target.value})}
-                          placeholder="Phone number"
+                          placeholder="+1 (555) 123-4567"
                         />
                       </div>
                     </div>
