@@ -17,7 +17,7 @@ function App() {
   return (
     <Router>
       <div 
-        className="min-h-screen bg-gradient-to-br from-red-50 to-white flex flex-col"
+        className="min-h-screen bg-gray-50 flex flex-col"
         onClick={handleScreenTap}
       >
         <main className="flex-grow">
