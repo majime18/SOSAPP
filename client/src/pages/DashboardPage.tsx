@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Shield, Settings, Users, AlertTriangle, MapPin, Clock, Video, Upload, Smartphone, Globe, Eye, Radio, VolumeX, Navigation, Siren } from 'lucide-react';
+import { Shield, Settings, AlertTriangle, MapPin, Clock, Video, Globe, Eye, Radio, VolumeX, Navigation, Users } from 'lucide-react';
 
 export function DashboardPage() {
   const navigate = useNavigate();
@@ -43,197 +43,151 @@ export function DashboardPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center">
-          <Shield className="h-8 w-8 text-red-600 mr-3" />
-          <h1 className="text-3xl font-bold text-red-600">S.O.S Dashboard</h1>
+      <header className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <Shield className="h-10 w-10 text-red-600" />
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
+            <p className="text-sm text-gray-500">Welcome to your S.O.S. hub</p>
+          </div>
         </div>
         <Button
           variant="outline"
           onClick={handleSettings}
-          className="border-red-200 hover:bg-red-50"
         >
           <Settings className="h-4 w-4 mr-2" />
           Settings
         </Button>
-      </div>
+      </header>
 
-      <Card className="bg-yellow-50 border-yellow-400 text-yellow-800 p-4 mb-6 text-center">
+      <Card className="bg-yellow-50 border-yellow-400 text-yellow-800 p-4 mb-8 text-center">
         <div className="flex items-center justify-center">
-          <AlertTriangle className="h-6 w-6 mr-2" />
-          <p className="font-bold">
+          <AlertTriangle className="h-5 w-5 mr-2" />
+          <p className="font-semibold text-sm">
             This app is NOT a replacement for 911. In an emergency, always call 911.
           </p>
         </div>
       </Card>
 
-      <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-        <h2 className="font-bold text-green-800 mb-2">🔴 GLOBAL LIVE PROTECTION ACTIVE</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <div className="flex items-center">
-            <Smartphone className="h-4 w-4 text-green-600 mr-2" />
-            <span>BLACK screen recording ready</span>
-          </div>
-          <div className="flex items-center">
-            <VolumeX className="h-4 w-4 text-green-600 mr-2" />
-            <span>🔇 Auto SILENT mode ready</span>
-          </div>
-          <div className="flex items-center">
-            <Navigation className="h-4 w-4 text-green-600 mr-2" />
-            <span>📍 GPS sharing with ALL users</span>
-          </div>
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
-          icon={<Globe className="h-8 w-8 text-blue-600" />}
+          icon={<Globe className="h-8 w-8 text-blue-500" />}
           title="Global Community"
           value="2,847"
-          description="🌍 Worldwide active members"
+          description="Worldwide active members"
         />
         <StatCard
-          icon={<AlertTriangle className="h-8 w-8 text-red-600" />}
-          title="🔴 LIVE Alerts"
+          icon={<AlertTriangle className="h-8 w-8 text-red-500" />}
+          title="LIVE Alerts"
           value="3"
-          description="Streaming + GPS globally now"
+          description="Streaming globally now"
         />
         <StatCard
-          icon={<Video className="h-8 w-8 text-green-600" />}
+          icon={<Video className="h-8 w-8 text-green-500" />}
           title="Your Recordings"
           value="0"
           description="96-hour global access"
         />
         <StatCard
-          icon={<Clock className="h-8 w-8 text-orange-600" />}
-          title="Global Response"
-          value="< 30 sec"
-          description="Worldwide notification speed"
+          icon={<Users className="h-8 w-8 text-purple-500" />}
+          title="Your Contacts"
+          value="3"
+          description="Emergency contacts set"
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Radio className="h-5 w-5 text-red-600 mr-2" />
-              🔴 LIVE Global S.O.S Alerts
-            </CardTitle>
-            <CardDescription>
-              Real-time emergencies + GPS locations broadcast to all users worldwide
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {activeAlerts.map((alert) => (
-                <div key={alert.id} className="border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-3">
-                      <MapPin className="h-4 w-4 text-gray-500" />
-                      <div>
-                        <p className="font-medium">{alert.location}</p>
-                        <p className="text-xs text-blue-600">📍 {alert.coordinates}</p>
-                        <p className="text-sm text-gray-500">{alert.distance} away</p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Radio className="h-5 w-5 text-red-600 mr-2 animate-pulse" />
+                LIVE Global S.O.S Alerts
+              </CardTitle>
+              <CardDescription>
+                Real-time emergencies broadcast to all users worldwide
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {activeAlerts.map((alert) => (
+                  <div key={alert.id} className="border rounded-lg p-4 transition-shadow hover:shadow-md">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-start space-x-3">
+                        <MapPin className="h-5 w-5 text-gray-500 mt-1" />
+                        <div>
+                          <p className="font-semibold text-gray-800">{alert.location}</p>
+                          <p className="text-xs text-blue-600 font-mono">{alert.coordinates}</p>
+                          <p className="text-sm text-gray-500">{alert.distance} away</p>
+                        </div>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <Badge variant={alert.isLive ? 'destructive' : 'secondary'} className="mb-1">
+                          {alert.isLive ? '🔴 LIVE' : 'Resolved'}
+                        </Badge>
+                        <p className="text-xs text-gray-500">{alert.time}</p>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <Badge variant={alert.status === 'active' ? 'destructive' : 'secondary'}>
-                        {alert.isLive ? '🔴 LIVE' : alert.status}
-                      </Badge>
-                      <p className="text-sm text-gray-500 mt-1">{alert.time}</p>
+                    
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex items-center space-x-2 text-sm text-blue-600">
+                        <Eye className="h-4 w-4" />
+                        <span>{alert.viewers} viewers worldwide</span>
+                      </div>
+                      {alert.isLive && (
+                        <Button
+                          size="sm"
+                          onClick={() => handleWatchLive(alert.id)}
+                          className="bg-red-600 hover:bg-red-700"
+                        >
+                          Watch LIVE
+                        </Button>
+                      )}
                     </div>
                   </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2 text-sm">
-                      <Eye className="h-4 w-4 text-blue-600" />
-                      <span className="text-blue-600">🌍 {alert.viewers} viewers worldwide</span>
-                    </div>
-                    {alert.isLive && (
-                      <Button
-                        size="sm"
-                        onClick={() => handleWatchLive(alert.id)}
-                        className="bg-red-600 hover:bg-red-700"
-                      >
-                        🔴 Watch LIVE
-                      </Button>
-                    )}
-                  </div>
-                  
-                  <div className="mt-2 text-xs text-gray-600 space-y-1">
-                    <p>📤 Video auto-uploaded • 🌍 Global community responding</p>
-                    <p>📍 GPS location shared with ALL users • 🔇 Victim's phone SILENT</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Shield className="h-5 w-5 text-green-600 mr-2" />
-              Your Global Protection Status
-            </CardTitle>
-            <CardDescription>
-              Automatic systems connected to worldwide network
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
-                <div>
-                  <p className="font-medium text-green-800">🟢 Connected to Global Network</p>
-                  <p className="text-sm text-green-600">🌍 2,847 users worldwide ready to help</p>
-                </div>
-                <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse"></div>
+                ))}
               </div>
-              
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="lg:col-span-1">
+          <Card className="h-full bg-gray-50">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Shield className="h-5 w-5 text-green-600 mr-2" />
+                Your Protection Status
+              </CardTitle>
+              <CardDescription>
+                Your automatic safety systems are ready.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
               <div className="space-y-3">
-                <h4 className="font-medium">🔴 LIVE Global Broadcasting Ready:</h4>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <div className="flex items-center">
-                    <span className="text-green-600 mr-2">✅</span>
-                    <span>BLACK screen recording (stealth mode)</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-green-600 mr-2">✅</span>
-                    <span>🔇 Auto SILENT mode (no sounds to expose you)</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-green-600 mr-2">✅</span>
-                    <span>📍 GPS location sharing with ALL users</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-green-600 mr-2">✅</span>
-                    <span>🔴 LIVE stream to ALL users worldwide</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-green-600 mr-2">✅</span>
-                    <span>🌍 Global community instant alerts</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-green-600 mr-2">✅</span>
-                    <span>Auto-upload to secure cloud servers</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-green-600 mr-2">✅</span>
-                    <span>3 emergency contacts configured</span>
-                  </div>
+                <div className="flex items-center justify-between p-3 bg-green-100 text-green-800 rounded-lg">
+                  <p className="font-semibold text-sm">Global Network: Connected</p>
+                  <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse"></div>
                 </div>
+                
+                <h4 className="font-semibold text-sm text-gray-700 pt-2">Automatic Features Ready:</h4>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <FeatureStatusItem>BLACK screen recording</FeatureStatusItem>
+                  <FeatureStatusItem>Auto SILENT mode</FeatureStatusItem>
+                  <FeatureStatusItem>GPS sharing with ALL users</FeatureStatusItem>
+                  <FeatureStatusItem>LIVE stream to ALL users</FeatureStatusItem>
+                  <FeatureStatusItem>Global community instant alerts</FeatureStatusItem>
+                </ul>
               </div>
-
               <Button
                 variant="outline"
-                className="w-full"
+                className="w-full mt-6"
                 onClick={handleSettings}
               >
                 Configure Settings
               </Button>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
@@ -241,17 +195,26 @@ export function DashboardPage() {
 
 function StatCard({ icon, title, value, description }) {
   return (
-    <Card>
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-gray-600">{title}</p>
-            <p className="text-2xl font-bold">{value}</p>
-            <p className="text-sm text-gray-500">{description}</p>
-          </div>
+    <Card className="hover:shadow-lg transition-shadow">
+      <CardContent className="p-4 flex items-center gap-4">
+        <div className="bg-gray-100 p-3 rounded-lg">
           {icon}
+        </div>
+        <div>
+          <p className="text-2xl font-bold text-gray-800">{value}</p>
+          <p className="text-sm font-medium text-gray-600">{title}</p>
+          <p className="text-xs text-gray-500">{description}</p>
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function FeatureStatusItem({ children }) {
+  return (
+    <li className="flex items-center">
+      <span className="text-green-500 mr-2">✓</span>
+      {children}
+    </li>
   );
 }
