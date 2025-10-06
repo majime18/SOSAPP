@@ -1,3 +1,8 @@
+
+// Project Ownership:
+// JORGE BERMÚDEZ-PRADO - 50%
+// LUCIA BERMUDEZ-PRADO - 50%
+
 import express from 'express';
 import dotenv from 'dotenv';
 import { setupStaticServing } from './static-serve.js';
