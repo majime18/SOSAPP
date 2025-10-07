@@ -1,4 +1,3 @@
-
 // Project Ownership:
 // JORGE BERMÚDEZ-PRADO - 50%
 // LUCIA BERMUDEZ-PRADO - 50%
@@ -15,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// example endpoint
+// Ejemplo de endpoint (descomenta y ajusta si lo necesitas)
 // app.get('/api/hello', (req: express.Request, res: express.Response) => {
 //   res.json({ message: 'Hello World!' });
 // });
