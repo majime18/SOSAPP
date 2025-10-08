@@ -1,20 +1,23 @@
 import path from 'path';
 import express from 'express';
+import fs from 'fs';
 
 /**
  * Sets up static file serving for the Express app
  * @param app Express application instance
  */
 export function setupStaticServing(app: express.Application) {
-  // Serve static files from the public directory
-  app.use(express.static(path.join(process.cwd(), 'public')));
+  const publicPath = path.join(__dirname, '..', 'dist', 'public'); // Sube un nivel desde server/
+  if (!fs.existsSync(publicPath)) {
+    console.error(`Directorio ${publicPath} no encontrado. Asegúrate de ejecutar 'npm run build' primero.`);
+    return;
+  }
+  app.use(express.static(publicPath));
 
-  // For any other routes, serve the index.html file
   app.get('/{*splat}', (req, res, next) => {
-    // Skip API routes
     if (req.path.startsWith('/api/')) {
       return next();
     }
-    res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+    res.sendFile(path.join(publicPath, 'index.html'));
   });
 }
